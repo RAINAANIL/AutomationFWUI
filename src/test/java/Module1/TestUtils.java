@@ -7,7 +7,7 @@ import org.testng.annotations.Listeners;
 import java.io.File;
 import java.io.IOException;
 
-@Listeners(Listener.TestListeners.class)
+@Listeners({EventListeners.TestListeners.class,EventListeners.SuiteListeners.class})
 public class TestUtils extends Browser {
 
 

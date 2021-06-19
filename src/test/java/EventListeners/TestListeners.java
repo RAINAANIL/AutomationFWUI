@@ -1,4 +1,4 @@
-package Listener;
+package EventListeners;
 
 import core.Reporting;
 import org.testng.ITestContext;
@@ -13,16 +13,19 @@ public class TestListeners implements ITestListener {
     public void onTestStart(ITestResult result) {
         System.out.println("STart");
         Test test = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
-        Reporting.startTest(context.getName(), test.description());
+        Reporting.startTest("Test", "Description");
 
 
     }
 
     public void onTestSuccess(ITestResult result) {
         System.out.println("Success");
+        Reporting.testPassed();
     }
 
     public void onTestFailure(ITestResult result) {
+        Reporting.fail("Test Has Failed " +result.getTestName());
+        Reporting.testFailed(result.getThrowable());
     }
 
     public void onTestSkipped(ITestResult result) {

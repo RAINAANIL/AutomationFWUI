@@ -1,6 +1,8 @@
 package core;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -9,7 +11,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class Browser {
 
-    protected WebDriver driver;
+    protected static WebDriver driver;
     String browser;
 
 
@@ -42,4 +44,10 @@ public class Browser {
         }
     }
 
+    public static String takeScreenshot() {
+        String base64Image = "";
+        TakesScreenshot ts = ((TakesScreenshot) driver);
+        base64Image = ts.getScreenshotAs(OutputType.BASE64);
+        return base64Image;
+    }
 }
