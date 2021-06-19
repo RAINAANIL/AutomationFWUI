@@ -1,13 +1,21 @@
 package Listener;
 
+import core.Reporting;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.annotations.Test;
+
 
 public class TestListeners implements ITestListener {
+    ITestContext context;
 
     public void onTestStart(ITestResult result) {
         System.out.println("STart");
+        Test test = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(Test.class);
+        Reporting.startTest(context.getName(), test.description());
+
+
     }
 
     public void onTestSuccess(ITestResult result) {
