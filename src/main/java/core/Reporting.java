@@ -69,7 +69,10 @@ public class Reporting {
         if (getThreadSafeTest() != null)
             getThreadSafeTest().pass(message);
     }
-
+    public static synchronized void info(String message) {
+        if (getThreadSafeTest() != null)
+            getThreadSafeTest().info(message);
+    }
     public static synchronized void fail(String message) {
         if (getThreadSafeTest() != null)
             getThreadSafeTest().fail(message);

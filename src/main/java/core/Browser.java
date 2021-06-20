@@ -11,9 +11,13 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class Browser {
 
-    protected static WebDriver driver;
+    protected static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
     String browser;
 
+
+    public static WebDriver getThreadedWebDriver() {
+        return driver.get();
+    }
 
     public void initialiseBrowser() {
         Config.setPropertyPath();
@@ -21,13 +25,13 @@ public class Browser {
 
         if (browser.equalsIgnoreCase("chrome") || browser.equalsIgnoreCase("ch")) {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            driver.set(new ChromeDriver());
         } else if (browser.equalsIgnoreCase("firefox") || browser.equalsIgnoreCase("ff")) {
             WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
+            driver.set(new FirefoxDriver());
         } else if (browser.equalsIgnoreCase("ie")) {
             WebDriverManager.iedriver().setup();
-            driver = new InternetExplorerDriver();
+            driver.set(new InternetExplorerDriver());
         } else if (browser.startsWith("cloud")) {
             if (browser.contains("desktop")) {
 
@@ -44,9 +48,11 @@ public class Browser {
         }
     }
 
+
+
     public static String takeScreenshot() {
         String base64Image = "";
-        TakesScreenshot ts = ((TakesScreenshot) driver);
+        TakesScreenshot ts = ((TakesScreenshot) getThreadedWebDriver());
         base64Image = ts.getScreenshotAs(OutputType.BASE64);
         return base64Image;
     }

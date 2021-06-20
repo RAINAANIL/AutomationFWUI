@@ -2,6 +2,7 @@ package Module1;
 
 import core.Browser;
 import core.Config;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Listeners;
 
 import java.io.File;
@@ -27,8 +28,13 @@ public class TestUtils extends Browser {
         }
 
         String url = Config.getValue("ModuleA" + "url");
-        driver.get(url);
+        getThreadedWebDriver().get(url);
 
+    }
+
+
+    public void tearDown() {
+        getThreadedWebDriver().close();
     }
 
 }

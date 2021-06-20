@@ -2,6 +2,7 @@ package Module1;
 
 
 import core.Reporting;
+import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.*;
 
 import static org.assertj.core.api.Assertions.*;
@@ -16,34 +17,45 @@ public class TestA extends TestUtils {
 
     @Test
     public void test() {
-        System.out.println("Jai Ganesh");
+        Reporting.info("Jai Ganesh");
         assertThat(true).isTrue();
     }
 
 
     @Test
     public void testB() {
-        System.out.println("Test B");
+        Reporting.info("Test B");
         assertThat("This string").doesNotContainOnlyWhitespaces();
     }
 
     @Test
     public void testC() {
-        System.out.println("Test C");
+        Reporting.info("Test C");
         assertThat(false).isTrue();
     }
 
     @Test
     public void testD() {
-        System.out.println("Test D");
-        assertThat(driver.getCurrentUrl()).isEqualToIgnoringWhitespace("https://phptravels.com/demo/");
+        Reporting.info("Test D");
+        assertThat(getThreadedWebDriver().getCurrentUrl()).isEqualToIgnoringWhitespace("https://phptravels.com/demo/");
     }
 
 
-    @AfterMethod
+    @Test
+    public void testE() {
+        Reporting.info("Test E for soft assertions");
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(getThreadedWebDriver().getCurrentUrl()).isEqualToIgnoringWhitespace("https://phptravels.com/demo/");
+        softly.assertThat(5).isGreaterThan(4);
+        softly.assertThat(4).isLessThan(3);
+        softly.assertThat("A").isEqualTo("a");
+        softly.assertAll();
+
+    }
+
+    @AfterMethod()
     public void tearDown() {
-        driver.quit();
+        super.tearDown();
     }
-
 
 }
